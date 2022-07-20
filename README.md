@@ -5,15 +5,21 @@ A File Sharing application that generates a link when a file is uploaded, and an
 
 1. NodeJs - Used as asynchronous event-driven JavaScript runtime.
 2. Express - Rest api using Express
-### Live Demo : https://chatapp.com/
+### Live Demo : https://shubhofileshare.herokuapp.com/
 
 
 ## Preview
-Join/Sign Up Page
-![Join](https://github.com/Yajassardana/Real-Time-Chat-App/blob/master/README/Screenshot%20(58).png)
+File uploading Page
+![UI](https://github.com/Shubhobroto/file-share/blob/master/Readme/fileshare1.jpg)
 
-Auto Scroll down on spamming of messages
-![Join](https://github.com/Yajassardana/Real-Time-Chat-App/blob/master/README/Screenshot%20(58).png)
+Choose File
+![fileUpload](https://github.com/Shubhobroto/file-share/blob/master/Readme/fileshare2.jpg)
+
+Link Generated
+![link-Generated](https://github.com/Shubhobroto/file-share/blob/master/Readme/fileshare3.jpg)
+
+Link redirecting page
+![download -file](https://github.com/Shubhobroto/file-share/blob/master/Readme/fileshare4.jpg)
 
 ## Local Setup & Available Scripts
 
