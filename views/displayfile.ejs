@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Download File</title>
+    <link rel="stylesheet" href="displayfile.css" />
+    <!-- <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    /> -->
+    <style>
+      body {
+        background-color: #5cdb95;
+        height: 100%;
+        width: 100%;
+        font-family: "Lao Muang Khong", sans-serif;
+      }
+
+      h1 {
+        color: #edf5e1;
+        font-weight: 600;
+        font-size: 32px;
+        text-align: center;
+      }
+      label {
+        color: #05386b;
+        font-weight: bold;
+        font-size: 16px;
+      }
+      form {
+        min-width: 80vw;
+      }
+      input {
+        color: #379683;
+        cursor: pointer;
+      }
+
+      .form-group {
+        padding: 40px 20px;
+        border: 1px dashed #379683;
+        border-style: dashed;
+        display: block;
+      }
+
+      .custom-btn {
+        width: 130px;
+        height: 40px;
+        color: #fff;
+        border-radius: 5px;
+        padding: 10px 25px;
+        font-family: "Lato", sans-serif;
+        font-weight: 500;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
+        box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+          7px 7px 20px 0px rgba(0, 0, 0, 0.1),
+          4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+        outline: none;
+      }
+
+      .share {
+        background: rgb(0, 172, 238);
+        background: linear-gradient(
+          0deg,
+          rgba(0, 172, 238, 1) 0%,
+          rgba(2, 126, 251, 1) 100%
+        );
+        width: 130px;
+        height: 40px;
+        line-height: 42px;
+        padding: 0;
+        border: none;
+      }
+      .share span {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      .share:before,
+      .share:after {
+        position: absolute;
+        content: "";
+        right: 0;
+        top: 0;
+        background: rgba(2, 126, 251, 1);
+        transition: all 0.3s ease;
+      }
+      .share:before {
+        height: 0%;
+        width: 2px;
+      }
+      .share:after {
+        width: 0%;
+        height: 2px;
+      }
+      .share:hover {
+        background: transparent;
+        box-shadow: none;
+      }
+      .share:hover:before {
+        height: 100%;
+      }
+      .share:hover:after {
+        width: 100%;
+      }
+      .share span:hover {
+        color: rgba(2, 126, 251, 1);
+      }
+      .share span:before,
+      .share span:after {
+        position: absolute;
+        content: "";
+        left: 0;
+        bottom: 0;
+        background: rgba(2, 126, 251, 1);
+        transition: all 0.3s ease;
+      }
+      .share span:before {
+        width: 2px;
+        height: 0%;
+      }
+      .share span:after {
+        width: 0%;
+        height: 2px;
+      }
+      .share span:hover:before {
+        height: 100%;
+      }
+      .share span:hover:after {
+        width: 100%;
+      }
+
+      .clipboard {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center">
+        Your File is Ready (Link will Expire After 24 Hours)
+      </h1>
+      <br /><br />
+      <h2 class="text-center">File Info</h2>
+      <br />
+      <h3 class="text-center"><%=path%></h3>
+      <br /><br />
+      <input type="text" value="<%=path%>" id="path" hidden />
+      <div class="form-group container">
+        <button onclick="download()" class="custom-btn share">
+          <span>Download File</span>
+        </button>
+      </div>
+    </div>
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    function download() {
+      window.open("/download?path=/public/uploads/" + $("#path").val());
+      location.reload();
+    }
+  </script>
+</html>
