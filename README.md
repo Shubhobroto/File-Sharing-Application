@@ -5,7 +5,7 @@ A File Sharing application that generates a link when a file is uploaded, and an
 
 1. NodeJs - Used as asynchronous event-driven JavaScript runtime.
 2. Express - Rest api using Express
-### Live Demo : https://shubhofileshare.herokuapp.com/
+### Live Demo : https://file-sharing-application-production.up.railway.app/
 
 
 ## Preview
