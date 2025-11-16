@@ -1,271 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-    /> -->
-    <title>P2P Realtime File Sharing Online</title>
-    <style>
-      body {
-        background-color: #5cdb95;
-        height: 100%;
-        width: 100%;
-        font-family: "Lao Muang Khong", sans-serif;
-      }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Sharing App</title>
 
-      h1 {
-        color: #edf5e1;
-        font-weight: 600;
-        font-size: 32px;
-        text-align: center;
-      }
-      label {
-        color: #05386b;
-        font-weight: bold;
-        font-size: 16px;
-      }
-      form {
-        min-width: 80vw;
-      }
-      input {
-        color: #379683;
-        cursor: pointer;
-      }
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-      .form-group {
-        padding: 40px 20px;
-        border: 1px dashed #379683;
-        border-style: dashed;
-        display: block;
-      }
+  <!-- GSAP for animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-      .custom-btn {
-        width: 130px;
-        height: 40px;
-        color: #fff;
-        border-radius: 5px;
-        padding: 10px 25px;
-        font-family: "Lato", sans-serif;
-        font-weight: 500;
-        background: transparent;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        position: relative;
-        display: inline-block;
-        box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
-          7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-          4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-        outline: none;
-      }
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-      .share {
-        background: rgb(0, 172, 238);
-        background: linear-gradient(
-          0deg,
-          rgba(0, 172, 238, 1) 0%,
-          rgba(2, 126, 251, 1) 100%
-        );
-        width: 130px;
-        height: 40px;
-        line-height: 42px;
-        padding: 0;
-        border: none;
-      }
-      .share span {
-        position: relative;
-        display: block;
-        width: 100%;
-        height: 100%;
-      }
-      .share:before,
-      .share:after {
-        position: absolute;
-        content: "";
-        right: 0;
-        top: 0;
-        background: rgba(2, 126, 251, 1);
-        transition: all 0.3s ease;
-      }
-      .share:before {
-        height: 0%;
-        width: 2px;
-      }
-      .share:after {
-        width: 0%;
-        height: 2px;
-      }
-      .share:hover {
-        background: transparent;
-        box-shadow: none;
-      }
-      .share:hover:before {
-        height: 100%;
-      }
-      .share:hover:after {
-        width: 100%;
-      }
-      .share span:hover {
-        color: rgba(2, 126, 251, 1);
-      }
-      .share span:before,
-      .share span:after {
-        position: absolute;
-        content: "";
-        left: 0;
-        bottom: 0;
-        background: rgba(2, 126, 251, 1);
-        transition: all 0.3s ease;
-      }
-      .share span:before {
-        width: 2px;
-        height: 0%;
-      }
-      .share span:after {
-        width: 0%;
-        height: 2px;
-      }
-      .share span:hover:before {
-        height: 100%;
-      }
-      .share span:hover:after {
-        width: 100%;
-      }
+  <style>
+    body {
+      background: radial-gradient(circle at top, #ff7e5f, #62109f 40%, #120224 90%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Inter", sans-serif;
+    }
 
-      .clipboard {
-        text-align: center;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1 class="text-center">File Sharing App</h1>
-      <form id="form">
-        <div class="form-group">
-          <label for="file">Upload File:</label>
-          <input class="form-control" type="file" id="upload-input" required />
-        </div>
-        <div class="progress">
-          <div class="progress-bar" role="progressbar"></div>
-        </div>
-        <div class="">
-          <button id="button" class="custom-btn share">
-            <span>Share Files</span>
+    .glass {
+      background: rgba(18, 2, 36, 0.85);
+      backdrop-filter: blur(14px);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 222, 185, 0.25);
+      box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.55),
+        0 0 40px rgba(220, 14, 14, 0.4);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="glass p-10 w-full max-w-xl shadow-xl">
+    <h1 class="text-3xl font-bold text-center text-[#FFDEB9] mb-6 tracking-wide">
+      <span id="title-text">File Sharing App</span>
+    </h1>
+
+    <!-- Upload Zone -->
+    <div id="drop-zone"
+         class="border-2 border-dashed border-[#FFDEB9] rounded-2xl p-8 text-center cursor-pointer transition
+                hover:bg-white/5 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.5)]">
+
+      <i data-lucide="upload-cloud" class="w-12 h-12 text-[#FFDEB9] mx-auto mb-3"></i>
+      <p class="text-[#FFDEB9] font-semibold text-lg">Drag & Drop or Click to Upload</p>
+      <p class="text-[#FFDEB9]/70 text-sm mt-1">Up to 100 MB per file</p>
+
+      <input type="file" id="file-input" class="hidden" />
+    </div>
+
+    <!-- Progress Bar -->
+    <div id="progress-box" class="hidden mt-6">
+      <div class="w-full bg-white/10 rounded-full h-3 overflow-hidden">
+        <div id="progress-bar" class="bg-[#DC0E0E] h-3 rounded-full w-0"></div>
+      </div>
+      <p id="progress-text" class="text-[#FFDEB9] mt-2 text-center text-lg"></p>
+    </div>
+
+    <!-- Upload Result -->
+    <div id="result-box" class="hidden mt-8 text-center">
+      <i data-lucide="check-circle" class="w-12 h-12 text-[#FFDEB9] mx-auto mb-3"></i>
+      <p class="text-[#FFDEB9] text-lg mb-3">File Uploaded Successfully!</p>
+
+      <div class="flex flex-col gap-3">
+
+        <div class="flex items-center gap-2 bg-white/10 border border-[#FFDEB9]/40 p-2 rounded-xl">
+          <input id="share-link"
+                 class="flex-1 bg-transparent text-[#FFDEB9] outline-none text-sm"
+                 readonly />
+          <button id="copy-btn"
+                  class="px-4 py-2 rounded-lg bg-[#DC0E0E] text-white text-sm font-semibold
+                         hover:bg-red-700 active:scale-95 transition flex items-center gap-1">
+            <i data-lucide="copy" class="w-4 h-4"></i> Copy
           </button>
         </div>
-      </form>
-      <br /><br />
-      <script
-        src="https://kit.fontawesome.com/d97b87339f.js"
-        crossorigin="anonymous"
-      ></script>
-      <br /><br />
 
-      <h1 style="display: none" id="result">
-        File is Uploaded Now You can share Link with Others
-      </h1>
-      <br /><br />
-      <div id="section" style="display: none" class="clipboard">
-        <input onclick="copy()" class="copy-input" value="" id="url" readonly />
-        <button class="copy-btn" id="copyButton" onclick="copy()">
-          <i class="far fa-copy"></i>
+        <button id="open-link-btn"
+                class="w-full px-4 py-3 rounded-xl bg-[#FFDEB9] text-[#62109F] font-semibold
+                       hover:bg-[#ffe6c7] active:scale-95 transition flex items-center justify-center gap-2">
+          <i data-lucide="external-link" class="w-4 h-4"></i>
+          Open Link in New Tab
         </button>
+
       </div>
-      <div id="copied-success" class="copied">
-        <span>Copied!</span>
-      </div>
-      <br /><br />
     </div>
-  </body>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Toast -->
+    <div id="toast"
+         class="hidden fixed bottom-6 right-6 bg-black text-white px-4 py-2 rounded-lg shadow-lg">
+      Copied!
+    </div>
+
+  </div>
+
   <script>
-    var files;
-    $("#form").on("submit", function (e) {
+    lucide.createIcons();
+
+    const dropZone = document.getElementById("drop-zone");
+    const fileInput = document.getElementById("file-input");
+    const progressBox = document.getElementById("progress-box");
+    const progressBar = document.getElementById("progress-bar");
+    const progressText = document.getElementById("progress-text");
+    const resultBox = document.getElementById("result-box");
+    const shareLink = document.getElementById("share-link");
+    const copyBtn = document.getElementById("copy-btn");
+    const openLinkBtn = document.getElementById("open-link-btn");
+    const toast = document.getElementById("toast");
+
+    gsap.from("#title-text", { opacity: 0, y: -20, duration: 1 });
+
+    dropZone.addEventListener("click", () => fileInput.click());
+    dropZone.addEventListener("dragover", (e) => e.preventDefault());
+    dropZone.addEventListener("drop", (e) => {
       e.preventDefault();
-      //$('#upload-input').click();
-      $(".progress-bar").text("0%");
-      $("#button").text("Uploading File");
-      $("#button").prop("disabled", "true");
-      $(".progress-bar").width("0%");
-      convertFile();
+      fileInput.files = e.dataTransfer.files;
+      uploadFile();
     });
 
-    $("#upload-input").on("change", function () {
-      files = $(this).get(0).files;
+    fileInput.addEventListener("change", uploadFile);
+
+    function uploadFile() {
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      progressBox.classList.remove("hidden");
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "/uploadfile");
+
+      xhr.upload.onprogress = (e) => {
+        let percent = (e.loaded / e.total) * 100;
+        progressBar.style.width = percent + "%";
+        progressText.textContent = Math.floor(percent) + "%";
+      };
+
+      xhr.onload = () => {
+        const data = JSON.parse(xhr.responseText);
+
+        const shareUrl =
+          window.location.origin +
+          `/files/${data.fileId}?url=${encodeURIComponent(data.fileUrl)}`;
+
+        resultBox.classList.remove("hidden");
+        shareLink.value = shareUrl;
+
+        openLinkBtn.onclick = () => window.open(shareUrl, "_blank");
+
+        gsap.from("#result-box", { opacity: 0, y: 20, duration: 0.5 });
+      };
+
+      xhr.send(formData);
+    }
+
+    copyBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(shareLink.value);
+      toast.classList.remove("hidden");
+      setTimeout(() => toast.classList.add("hidden"), 1200);
     });
-
-    function convertFile() {
-      if (files.length > 0) {
-        // create a FormData object which will be sent as the data payload in the
-        // AJAX request
-        var formData = new FormData();
-        // loop through all the selected files and add them to the formData object
-        for (var i = 0; i < files.length; i++) {
-          var file = files[i];
-          // add the files to formData object for the data payload
-          formData.append("file", file, file.name);
-        }
-        console.log(formData);
-        var formdata2 = new FormData();
-        $.ajax({
-          url: "/uploadfile",
-          type: "POST",
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function (data) {
-            console.log(data.path);
-            $("#button").text("Share Files");
-            $("#button").prop("disabled", null);
-            $(".progress-bar").width("0%");
-            $("#upload-input").val("");
-            $("#section").show();
-            $("#result").show();
-            $(".copy-input").val(
-              "https://fshareapp.herokuapp.com/files/" + data.path
-            );
-          },
-          xhr: function () {
-            // create an XMLHttpRequest
-            var xhr = new XMLHttpRequest();
-            // listen to the 'progress' event
-            xhr.upload.addEventListener(
-              "progress",
-              function (evt) {
-                if (evt.lengthComputable) {
-                  // calculate the percentage of upload completed
-                  var percentComplete = evt.loaded / evt.total;
-                  percentComplete = parseInt(percentComplete * 100);
-                  // update the Bootstrap progress bar with the new percentage
-                  $(".progress-bar").text(percentComplete + "%");
-                  $(".progress-bar").width(percentComplete + "%");
-                  // once the upload reaches 100%, set the progress bar text to done
-                  if (percentComplete === 100) {
-                    $(".progress-bar").html("Done");
-                  }
-                }
-              },
-              false
-            );
-            return xhr;
-          },
-        });
-      }
-    }
   </script>
-  <script>
-    function copy() {
-      var copyText = document.getElementById("url");
-      copyText.select();
-      copyText.setSelectionRange(0, 99999);
-      document.execCommand("copy");
 
-      $("#copied-success").fadeIn(800);
-      $("#copied-success").fadeOut(800);
-    }
-  </script>
+</body>
 </html>
