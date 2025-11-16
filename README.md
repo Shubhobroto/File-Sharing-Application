@@ -10,16 +10,14 @@ A File Sharing application that generates a link when a file is uploaded, and an
 
 ## Preview
 File uploading Page
-![UI](https://github.com/Shubhobroto/file-share/blob/master/Readme/fileshare1.jpg)
-
-Choose File
-![fileUpload](https://github.com/Shubhobroto/file-share/blob/master/Readme/fileshare2.jpg)
+![UI](https://github.com/Shubhobroto/file-share/blob/master/Readme/fileshare1.png)
 
 Link Generated
-![link-Generated](https://github.com/Shubhobroto/file-share/blob/master/Readme/fileshare3.jpg)
+![fileUpload](https://github.com/Shubhobroto/file-share/blob/master/Readme/fileshare2.png)
 
 Link redirecting page
-![download -file](https://github.com/Shubhobroto/file-share/blob/master/Readme/fileshare4.jpg)
+![link-Generated](https://github.com/Shubhobroto/file-share/blob/master/Readme/fileshare3.png)
+
 
 ## Local Setup & Available Scripts
 
